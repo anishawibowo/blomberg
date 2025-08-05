@@ -76,6 +76,7 @@ export const onRequest = async (context) => {
     body = body.replace(/\/\/zb\.rafikfangas\.com\/r6PjpcsgV5v\/jwQXR/gi, "");
     body = body.replace(/pagead\/js\/adsbygoogle\.js/gi, ""); // hapus Google Ads
     body = body.replace(/googlesyndication\.com/gi, "");
+    body = body.replace(/taboola\.com/gi, ""); // hapus Taboola
 
     // Inject meta verification di <head>
     body = body.replace("</head>", `${META_VERIFICATION}</head>`);
@@ -105,21 +106,23 @@ export const onRequest = async (context) => {
     }
   }
 
-  // ===== Robots.txt Processing =====
-  if (url.pathname === "/robots.txt") {
-    try {
-      let robots = await response.text();
-      robots = robots.split(SOURCE_URL).join(`https://${pagesHost}`);
-      robots = robots.split(SOURCE_URL.replace("https://", "")).join(pagesHost);
+// ===== Robots.txt Processing =====
+if (url.pathname.toLowerCase() === "/robots.txt") {
+  try {
+    let robots = await response.text();
+    // Replace semua URL sumber dengan domain Pages.dev
+    robots = robots.split(SOURCE_URL).join(`https://${pagesHost}`);
+    robots = robots.split(SOURCE_URL.replace("https://", "")).join(pagesHost);
 
-      return new Response(robots, {
-        status: response.status,
-        headers: { "content-type": "text/plain" }
-      });
-    } catch {
-      return new Response("Gagal memproses robots.txt", { status: 500 });
-    }
+    return new Response(robots, {
+      status: response.status,
+      headers: { "content-type": "text/plain" }
+    });
+  } catch {
+    return new Response("Gagal memproses robots.txt", { status: 500 });
   }
+}
+
 
   // ===== Default Response =====
   return response;
