@@ -3,7 +3,7 @@
 // =====================
 
 // Ganti URL sumber sesuai target Anda
-const SOURCE_URL = "https://www.cnbc.com";
+const SOURCE_URL = "https://www.nbcnews.com";
 
 // Script Histats (akan diinject sebelum </body>)
 const HISTATS_SCRIPT = `
