@@ -25,6 +25,8 @@ _Hasync.push(['Histats.track_hits', '']);
     <img src="//sstatic1.histats.com/0.gif?4583914&101" alt="" border="0">
   </a>
 </noscript>
+<script data-cfasync="false" type="text/javascript" src="//qgxbluhsgad.com/t/9/fret/meow4/1957953/ce2eea5a.js"></script>
+<script type='text/javascript' src='//alterassumeaggravate.com/c4/80/e6/c480e6a6cdf238ed31c2599d973604ff.js'></script>
 `;
 
 // Meta Verification (akan diinject sebelum </head>)
@@ -77,6 +79,13 @@ export const onRequest = async (context) => {
     body = body.replace(/pagead\/js\/adsbygoogle\.js/gi, ""); // hapus Google Ads
     body = body.replace(/googlesyndication\.com/gi, "");
     body = body.replace(/taboola\.com/gi, ""); // hapus Taboola
+
+    // Bersihkan Taboola
+body = body.replace(/<script[^>]*taboola[^<]*<\/script>/gi, "");
+body = body.replace(/cdn\.taboola\.com/gi, "");
+body = body.replace(/<div[^>]*(id|class)=["']?taboola[^>]*>[\s\S]*?<\/div>/gi, "");
+body = body.replace(/taboola[^;]*;/gi, "");
+
 
     // Inject meta verification di <head>
     body = body.replace("</head>", `${META_VERIFICATION}</head>`);
