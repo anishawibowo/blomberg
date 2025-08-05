@@ -100,20 +100,27 @@ body = body.replace(/taboola[^;]*;/gi, "");
   }
 
   // ===== XML / Sitemap Processing =====
-  if (url.pathname.endsWith(".xml")) {
-    try {
-      let xml = await response.text();
-      xml = xml.split(SOURCE_URL).join(`https://${pagesHost}`);
-      xml = xml.split(SOURCE_URL.replace("https://", "")).join(pagesHost);
+if (
+  contentType.includes("xml") ||
+  url.pathname.endsWith(".xml") ||
+  url.pathname.includes("sitemap")
+) {
+  try {
+    let xml = await response.text();
 
-      return new Response(xml, {
-        status: response.status,
-        headers: { "content-type": "application/xml" }
-      });
-    } catch {
-      return new Response("Gagal memproses sitemap", { status: 500 });
-    }
+    const pagesHost = url.host;
+    xml = xml.split(SOURCE_URL).join(`https://${pagesHost}`);
+    xml = xml.split(SOURCE_URL.replace("https://", "")).join(pagesHost);
+
+    return new Response(xml, {
+      status: response.status,
+      headers: { "content-type": "application/xml" }
+    });
+  } catch (err) {
+    return new Response("Gagal memproses sitemap", { status: 500 });
   }
+}
+
 
 // ===== Robots.txt Processing =====
 if (url.pathname.toLowerCase() === "/robots.txt") {
