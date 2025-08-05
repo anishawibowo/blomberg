@@ -1,4 +1,4 @@
-const SOURCE_URL = "https://www.bloomberg.com";
+const SOURCE_URL = "https://www.cnbc.com";
 
 // Histats Script
 const HISTATS_SCRIPT = `
@@ -17,8 +17,8 @@ export const onRequest = async (context) => {
   const url = new URL(context.request.url);
 
   // Handler untuk IndexNow
-  if (url.pathname === "/5ad9f5a8d25e415ea2969ebba0f8e73b.txt") {
-    return new Response("5ad9f5a8d25e415ea2969ebba0f8e73b", {
+  if (url.pathname === "/49cf68388e7848899fc3bd60c8d3d10c.txt") {
+    return new Response("49cf68388e7848899fc3bd60c8d3d10c", {
       status: 200,
       headers: { "content-type": "text/plain" }
     });
